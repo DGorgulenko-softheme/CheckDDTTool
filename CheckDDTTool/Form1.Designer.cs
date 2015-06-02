@@ -209,6 +209,7 @@
             this.ConfigBox.Size = new System.Drawing.Size(312, 20);
             this.ConfigBox.TabIndex = 12;
             this.ConfigBox.Text = "C:\\Parameters.csv";
+            this.ConfigBox.TextChanged += new System.EventHandler(this.ConfigBox_TextChanged);
             // 
             // CheckTool
             // 

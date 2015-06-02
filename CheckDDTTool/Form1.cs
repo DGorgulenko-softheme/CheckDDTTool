@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 using Replay.ServiceHost.Contracts;
@@ -193,8 +194,29 @@ namespace CheckDDTTool
          //_coreClient.LocalMountManagement.Dismount(mount.MountedVolume.GuidName);
          //MessageBox.Show("The recovery point has been succesfully dismounted");
 
-           var Current = Directory.GetCurrentDirectory();
-           TextFieldParser parser = new TextFieldParser(ConfigBox.Text);
+
+            var contents = File.ReadAllText(ConfigBox.Text).Split('\n');
+            var csv = from line in contents
+                      select line.Split(',').ToArray();
+            int headerRows = 1;
+            StringBuilder sb = new StringBuilder();
+            foreach (var row in csv.Skip(headerRows))
+            {
+                foreach (string value in row)
+                {
+                    sb.Append(value);
+                    sb.Append(' ');
+                }                
+            }
+            string finalName = sb.ToString();
+            Console.WriteLine(finalName);           
+
+        }
+        
+           
+
+           /* var Current = Directory.GetCurrentDirectory();
+           TextFieldParser parser = new TextFieldParser();
            parser.TextFieldType = FieldType.Delimited;
            parser.SetDelimiters(",");
            while (!parser.EndOfData)
@@ -203,14 +225,14 @@ namespace CheckDDTTool
                string[] fields = parser.ReadFields();
                foreach (string field in fields)
                {
-                   //TODO: Process field
+                   Console.WriteLine(field);//TODO: Process field
                }
            }
-           parser.Close();
+           parser.Close();*/
  
           //  ExecuteCommand( ,5000)
-           MessageBox.Show(Current);
-        }
+           //MessageBox.Show(Current);
+        
 
         private void textBox4_TextChanged(object sender, EventArgs e)
         {
@@ -224,6 +246,11 @@ namespace CheckDDTTool
         private void RPList_Click(object sender, EventArgs e)
         {
             MountButton.Enabled = Enabled;
+        }
+
+        private void ConfigBox_TextChanged(object sender, EventArgs e)
+        {
+
         }
 
 
