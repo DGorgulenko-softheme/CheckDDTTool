@@ -1,0 +1,220 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{44289D2D-D18A-4C9B-925E-0834C82BCB94}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CheckDDTTool</RootNamespace>
+    <AssemblyName>CheckDDTTool</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Agent.Contracts">
+      <HintPath>..\Common\Agent.Contracts.dll</HintPath>
+    </Reference>
+    <Reference Include="AppAssure.LicensePortal.Business.Exceptions">
+      <HintPath>..\Common\AppAssure.LicensePortal.Business.Exceptions.dll</HintPath>
+    </Reference>
+    <Reference Include="AppAssure.LicensePortal.Helpers">
+      <HintPath>..\Common\AppAssure.LicensePortal.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="AppAssure.LicensePortal.PhoneHome.WebServices.DataContracts">
+      <HintPath>..\Common\AppAssure.LicensePortal.PhoneHome.WebServices.DataContracts.dll</HintPath>
+    </Reference>
+    <Reference Include="AppAssure.LicensePortal.Translations">
+      <HintPath>..\Common\AppAssure.LicensePortal.Translations.dll</HintPath>
+    </Reference>
+    <Reference Include="C5">
+      <HintPath>..\Common\C5.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Core">
+      <HintPath>..\Common\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Windsor">
+      <HintPath>..\Common\Castle.Windsor.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Contracts">
+      <HintPath>..\Common\Common.Contracts.dll</HintPath>
+    </Reference>
+    <Reference Include="Containers.Contracts">
+      <HintPath>..\Common\Containers.Contracts.dll</HintPath>
+    </Reference>
+    <Reference Include="Containers.Implementation">
+      <HintPath>..\Common\Containers.Implementation.dll</HintPath>
+    </Reference>
+    <Reference Include="Core.Client">
+      <HintPath>..\Common\Core.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Core.Contracts">
+      <HintPath>..\Common\Core.Contracts.dll</HintPath>
+    </Reference>
+    <Reference Include="DatabaseClient.Contracts">
+      <HintPath>..\Common\DatabaseClient.Contracts.dll</HintPath>
+    </Reference>
+    <Reference Include="Gibraltar.Agent">
+      <HintPath>..\Common\Gibraltar.Agent.dll</HintPath>
+    </Reference>
+    <Reference Include="Ioc">
+      <HintPath>..\Common\Ioc.dll</HintPath>
+    </Reference>
+    <Reference Include="Ionic.Zip.Reduced">
+      <HintPath>..\Common\Ionic.Zip.Reduced.dll</HintPath>
+    </Reference>
+    <Reference Include="Localization.Base.Contracts">
+      <HintPath>..\Common\Localization.Base.Contracts.dll</HintPath>
+    </Reference>
+    <Reference Include="Localization.Management.Contracts">
+      <HintPath>..\Common\Localization.Management.Contracts.dll</HintPath>
+    </Reference>
+    <Reference Include="Logging">
+      <HintPath>..\Common\Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Deployment.WindowsInstaller">
+      <HintPath>..\Common\Microsoft.Deployment.WindowsInstaller.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Http">
+      <HintPath>..\Common\Microsoft.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Http.Extensions">
+      <HintPath>..\Common\Microsoft.Http.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\Common\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.ConnectionInfo, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Common\Microsoft.SqlServer.ConnectionInfo.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Smo, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Common\Microsoft.SqlServer.Smo.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="MonoListener">
+      <HintPath>..\Common\MonoListener.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\Common\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="O3E.Contracts">
+      <HintPath>..\Common\O3E.Contracts.dll</HintPath>
+    </Reference>
+    <Reference Include="O3EDiagnosticsInformation.DatabaseClient">
+      <HintPath>..\Common\O3EDiagnosticsInformation.DatabaseClient.dll</HintPath>
+    </Reference>
+    <Reference Include="O3EMetadataCache.DatabaseClient">
+      <HintPath>..\Common\O3EMetadataCache.DatabaseClient.dll</HintPath>
+    </Reference>
+    <Reference Include="O3EMigration.DatabaseClient">
+      <HintPath>..\Common\O3EMigration.DatabaseClient.dll</HintPath>
+    </Reference>
+    <Reference Include="ParallelExtensionsExtras">
+      <HintPath>..\Common\ParallelExtensionsExtras.dll</HintPath>
+    </Reference>
+    <Reference Include="Profiling">
+      <HintPath>..\Common\Profiling.dll</HintPath>
+    </Reference>
+    <Reference Include="Reporting.Contracts">
+      <HintPath>..\Common\Reporting.Contracts.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceHost.Contracts">
+      <HintPath>..\Common\ServiceHost.Contracts.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceHost.Implementation">
+      <HintPath>..\Common\ServiceHost.Implementation.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceHost.InMemoryHosting">
+      <HintPath>..\Common\ServiceHost.InMemoryHosting.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite">
+      <HintPath>..\Common\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Common\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WCFClientBase">
+      <HintPath>..\Common\WCFClientBase.dll</HintPath>
+    </Reference>
+    <Reference Include="WhiteLabeling.Contracts">
+      <HintPath>..\Common\WhiteLabeling.Contracts.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
