@@ -198,19 +198,17 @@ namespace CheckDDTTool
             var contents = File.ReadAllText(ConfigBox.Text).Split('\n');
             var csv = from line in contents
                       select line.Split(',').ToArray();
-            int headerRows = 1;
             StringBuilder sb = new StringBuilder();
-            foreach (var row in csv.Skip(headerRows))
+            string fileSize="";
+            string compression="";
+            foreach (var row in csv.Take(2))
             {
-                foreach (string value in row)
-                {
-                    sb.Append(value);
-                    sb.Append(' ');
-                }                
+                fileSize = row[0];
+                compression = row[1];               
             }
-            string finalName = sb.ToString();
-            Console.WriteLine(finalName);           
 
+            var arguments = " op=write threads=1 filename=C:\\TestFile  filesize=" + fileSize +" blocksize=512 dup-percentage="+ compression  +" buffering=direct io=sequential seed="+Seed ;
+            Console.WriteLine(arguments);
         }
         
            
