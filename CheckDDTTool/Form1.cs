@@ -11,6 +11,7 @@ using System.Management;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
+using AppAssure.LicensePortal.Business.Exceptions;
 using Microsoft.VisualBasic.FileIO;
 using Replay.Agent.Contracts.VolumeMountPoints;
 using Replay.Common.Contracts.Metadata.Storage;
@@ -39,13 +40,12 @@ namespace CheckDDTTool
         {
             var processInfo = new ProcessStartInfo("cmd.exe", "/C " + command)
             {
-                CreateNoWindow = true,
-                UseShellExecute = true,
+                CreateNoWindow = false,
+                UseShellExecute = false,
                 WorkingDirectory = "C:\\",
             };
-
             var process = Process.Start(processInfo);
-            process.WaitForExit(timeout);
+            process.WaitForExit();
             var exitCode = process.ExitCode;
             process.Close();
             return exitCode;
@@ -82,7 +82,7 @@ namespace CheckDDTTool
         {
             try
             {
-                StatusBar.Text = "Trying to connnect to the Core...";
+                StatusBar1.Text = "Trying to connnect to the Core...";
                 AgentList.Items.Clear();
                 if (String.IsNullOrEmpty(UserNameBox.Text) || String.IsNullOrEmpty(PasswordBox.Text))
                 {
@@ -92,15 +92,15 @@ namespace CheckDDTTool
                 {
                     _coreClient = GetFullCoreClient(ServerBox.Text, 8006, UserNameBox.Text, PasswordBox.Text);
                 }
-                StatusBar.Text = "Getting Protected aggents";
+                StatusBar1.Text = "Getting Protected aggents";
                 protectedAgents  = _coreClient.AgentsManagement.GetProtectedAgents();
-                StatusBar.Text = "Updating Agent list";
+                StatusBar1.Text = "Updating Agent list";
                 foreach (var Agent in protectedAgents)
                 {
                     var agentInfo = _coreClient.AgentsManagement.GetAgentInfo(Agent.Id.ToString());
                     AgentList.Items.Add(agentInfo.Descriptor.DisplayName);
                 }
-                StatusBar.Text = "Connected to " + ServerBox.Text;
+                StatusBar1.Text = "Connected to " + ServerBox.Text;
                 RPButton.Enabled = Enabled;
 
             }
@@ -118,7 +118,7 @@ namespace CheckDDTTool
                 var query = from Agent in protectedAgents
                     where Agent.DisplayName.ToString() == AgentList.SelectedItem.ToString()
                     select Agent.Id;
-                StatusBar.Text = "Getting Recovery points" ;
+                StatusBar1.Text = "Getting Recovery points" ;
                 RPs = _coreClient.RecoveryPointsManagement.GetAllRecoveryPoints(query.FirstOrDefault().ToString());
                 if (RPs == null)
                 {
@@ -138,6 +138,7 @@ namespace CheckDDTTool
 
         private void MountButton_Click(object sender, EventArgs e)
         {
+            StatusBar1.Text = "Getting selected RP";
             foreach (var RP in RPs)
             {
                 if (RP.DateTimestamp.ToString() == RPList.SelectedItem.ToString())
@@ -156,8 +157,8 @@ namespace CheckDDTTool
            };
             try
                 {
-                    // Verify if the recovery point can be mounted
-                    _coreClient.LocalMountManagement.VerifyVolumeImagesMountability(localmountJobRequest);
+                   StatusBar1.Text = "Verify if the recovery point can be mounted";
+                  _coreClient.LocalMountManagement.VerifyVolumeImagesMountability(localmountJobRequest);
                 }
             catch (Exception ex)
             {
@@ -165,7 +166,7 @@ namespace CheckDDTTool
                 
             }
             var jobId = _coreClient.LocalMountManagement.StartMount(localmountJobRequest);
-            MessageBox.Show("The recovery point with id "+ rPtoMount.Id + " has been successful mounted. MountPoint: "+ localmountJobRequest.MountPoint);
+            StatusBar1.Text = "The recovery point with id "+ rPtoMount.Id + " has been successful mounted. MountPoint: "+ localmountJobRequest.MountPoint;
 
             while (true)
             {
@@ -183,58 +184,39 @@ namespace CheckDDTTool
 
         private void CheckButton_Click(object sender, EventArgs e)
         {
-         //Generate a Same file
-         //var script = "$Parameters = Import-Csv C:\\Parameters.csv \n $arguments = \"op=write threads=1 filename="+ DDTPath.Text + "\\testFile filesize=$size blocksize=$blocksize dup-percentage=$dup_percentage buffering=direct io=sequential seed=$Seed";
-         //ExecuteCommand("", 5000); 
-         //var arguments = "op=write threads=1 filename="+ FilePathBox.Text + "filesize="+ +"blocksize=$blocksize dup-percentage=$dup_percentage buffering=direct io=sequential seed=$Seed";
-         //var command = DDTPath.Text + arguments;
-         //ExecuteCommand(command, 10000);
-         //Dismount all local mounted recovery points
-         //var mount = _coreClient.LocalMountManagement.GetMounts().Single();
-         //_coreClient.LocalMountManagement.Dismount(mount.MountedVolume.GuidName);
-         //MessageBox.Show("The recovery point has been succesfully dismounted");
 
-
+            StatusBar1.Text = "Getting parameters for ddt";
             var contents = File.ReadAllText(ConfigBox.Text).Split('\n');
             var csv = from line in contents
                       select line.Split(',').ToArray();
             int headerRows = 1;
-            StringBuilder sb = new StringBuilder();
-            foreach (var row in csv.Skip(headerRows))
+            string fileSize="";
+            string compression="";
+            foreach (var row in csv.Take(2))
             {
-                foreach (string value in row)
-                {
-                    sb.Append(value);
-                    sb.Append(' ');
-                }                
+                fileSize = row[0];
+                compression = row[1];
             }
-            string finalName = sb.ToString();
-            Console.WriteLine(finalName);           
-
+            var arguments = @" op=write threads=1 filename=C:\TestFile  filesize=" + fileSize +" blocksize=512 dup-percentage="+ compression  +" buffering=direct io=sequential seed="+Seed ;
+            var command = DDTPath.Text + arguments;
+            StatusBar1.Text = "Executing command " + command;
+            var Status = ExecuteCommand(command, 10000);
+            StatusBar1.Text = "Comparing files";
+            command = "fc C:\\TestFile " + FilePathBox.Text + @">>C:\"+ AgentList.SelectedItem.ToString()+ RPList.SelectedItem.ToString() + Seed +".txt";
+            Status = ExecuteCommand(command, 10000);
+            StatusBar1.Text = "Done";
+            Process.Start("notepad.exe", @"C:\Result.txt" );
+            //Dismount all local mounted recovery points
+            StatusBar1.Text = "Dismounting all Rps";
+            var mount = _coreClient.LocalMountManagement.GetMounts().Single();
+            if (mount != null)
+            {
+                _coreClient.LocalMountManagement.Dismount(mount.MountedVolume.GuidName);
+            }
+            StatusBar1.Text = "Done";
         }
         
-           
-
-           /* var Current = Directory.GetCurrentDirectory();
-           TextFieldParser parser = new TextFieldParser();
-           parser.TextFieldType = FieldType.Delimited;
-           parser.SetDelimiters(",");
-           while (!parser.EndOfData)
-           {
-               //Process row
-               string[] fields = parser.ReadFields();
-               foreach (string field in fields)
-               {
-                   Console.WriteLine(field);//TODO: Process field
-               }
-           }
-           parser.Close();*/
- 
-          //  ExecuteCommand( ,5000)
-           //MessageBox.Show(Current);
-        
-
-        private void textBox4_TextChanged(object sender, EventArgs e)
+        private void FileBoxOnclick(object sender, EventArgs e)
         {
            FileDialog FileDial = new OpenFileDialog();
            DialogResult SelectedFile = FileDial.ShowDialog();

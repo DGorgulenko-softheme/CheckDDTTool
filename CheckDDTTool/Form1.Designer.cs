@@ -43,7 +43,7 @@
             this.CheckButton = new System.Windows.Forms.Button();
             this.FilePathBox = new System.Windows.Forms.TextBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.StatusBar = new System.Windows.Forms.ToolStripStatusLabel();
+            this.StatusBar1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.MountPathBox = new System.Windows.Forms.TextBox();
             this.DDTPath = new System.Windows.Forms.TextBox();
             this.ConfigBox = new System.Windows.Forms.TextBox();
@@ -168,23 +168,23 @@
             this.FilePathBox.Name = "FilePathBox";
             this.FilePathBox.Size = new System.Drawing.Size(312, 20);
             this.FilePathBox.TabIndex = 8;
-            this.FilePathBox.DoubleClick += new System.EventHandler(this.textBox4_TextChanged);
+            this.FilePathBox.DoubleClick += new System.EventHandler(this.FileBoxOnclick);
             // 
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.StatusBar});
+            this.StatusBar1});
             this.statusStrip1.Location = new System.Drawing.Point(0, 292);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(417, 22);
             this.statusStrip1.TabIndex = 9;
             this.statusStrip1.Text = "statusStrip1";
             // 
-            // StatusBar
+            // StatusBar1
             // 
-            this.StatusBar.Name = "StatusBar";
-            this.StatusBar.Size = new System.Drawing.Size(126, 17);
-            this.StatusBar.Text = "Please connect to core";
+            this.StatusBar1.Name = "StatusBar1";
+            this.StatusBar1.Size = new System.Drawing.Size(126, 17);
+            this.StatusBar1.Text = "Please connect to core";
             // 
             // MountPathBox
             // 
@@ -259,7 +259,7 @@
         private System.Windows.Forms.Button CheckButton;
         private System.Windows.Forms.TextBox FilePathBox;
         private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.ToolStripStatusLabel StatusBar;
+        private System.Windows.Forms.ToolStripStatusLabel StatusBar1;
         private System.Windows.Forms.TextBox MountPathBox;
         private System.Windows.Forms.TextBox DDTPath;
         private System.Windows.Forms.TextBox ConfigBox;
